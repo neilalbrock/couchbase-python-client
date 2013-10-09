@@ -1279,7 +1279,7 @@ class Connection(_Base):
         self._design_poll(name, 'del', existing, syncwait)
         return ret
 
-    def query(self, design, view, use_devmode=False, **kwargs):
+    def query(self, design, view, spatial=False, use_devmode=False, **kwargs):
         """
         Query a pre-defined MapReduce view, passing parameters.
 
@@ -1309,7 +1309,7 @@ class Connection(_Base):
 
         """
         design = self._mk_devmode(design, use_devmode)
-        return View(self, design, view, **kwargs)
+        return View(self, design, view, spatial, **kwargs)
 
     def __repr__(self):
         return ("<{modname}.{cls} bucket={bucket}, "

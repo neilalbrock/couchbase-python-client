@@ -139,6 +139,7 @@ class View(object):
                  parent,
                  design,
                  view,
+                 spatial=False,
                  row_processor=None,
                  streaming=0,
                  include_docs=False,
@@ -241,6 +242,7 @@ class View(object):
         self._parent = parent
         self.design = design
         self.view = view
+        self.spatial = spatial
         self.errors = []
         self.raw = None
         self.rows_returned = 0
@@ -349,7 +351,7 @@ class View(object):
 
         # Figure out the path
         qstr = self._query.encoded
-        uri = make_dvpath(self.design, self.view)
+        uri = make_dvpath(self.design, self.view, self.spatial)
 
         if len(uri) + len(qstr) > 200:
             (uriparams, post_data) = self._query._long_query_encoded

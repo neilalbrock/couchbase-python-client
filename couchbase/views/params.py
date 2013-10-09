@@ -543,5 +543,6 @@ def make_options_string(input, unrecognized_ok=False, passthrough=False):
     return input.encoded
 
 
-def make_dvpath(doc, view):
-    return "_design/{0}/_view/{1}?".format(doc, view)
+def make_dvpath(doc, view, spatial=False):
+    vt = "_spatial" if spatial else "_view"
+    return "_design/{0}/{1}/{2}?".format(doc, vt, view)
