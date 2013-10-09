@@ -166,6 +166,8 @@ class Params(object):
     KEYS                    = "keys"
     INCLUSIVE_END           = "inclusive_end"
 
+    BBOX                    = "bbox"
+
     GROUP                   = "group"
     GROUP_LEVEL             = "group_level"
     REDUCE                  = "reduce"
@@ -191,6 +193,8 @@ _HANDLER_MAP = {
     Params.STARTKEY_DOCID    : _string_param_handler,
     Params.ENDKEY            : _jval_param_handler,
     Params.ENDKEY_DOCID      : _string_param_handler,
+
+    Params.BBOX              : _string_param_handler,
 
     Params.FULL_SET          : _bool_param_handler,
 
@@ -331,6 +335,8 @@ class Query(object):
     debug               = __genprop(Params.DEBUG)
     connection_timeout  = __genprop(Params.CONNECTION_TIMEOUT)
     full_set            = __genprop(Params.FULL_SET)
+
+    bbox                = __genprop(Params.BBOX)
 
     reduce              = __genprop(Params.REDUCE)
     group               = __genprop(Params.GROUP)

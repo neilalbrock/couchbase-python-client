@@ -37,6 +37,12 @@ Default class for a single row.
 """
 
 
+SpatialViewRow = namedtuple('SpatialViewRow', ['key', 'value', 'bbox', 'docid', 'doc'])
+"""
+Default class for a single spatial row.
+"""
+
+
 class RowProcessor(object):
     """
     This class contains the handling and conversion functions between
@@ -125,6 +131,40 @@ class RowProcessor(object):
 
             yield self.rowclass(ret['key'],
                                 ret['value'],
+                                # Use get, because reduce values don't have
+                                # IDs
+                                ret.get('id'),
+                                doc)
+
+        self._docs = None
+        self._riter = None
+
+
+class SpatialRowProcessor(RowProcessor):
+    """
+    Spatial view row processor.
+
+    """
+    def __init__(self, rowclass=SpatialViewRow):
+        super(SpatialRowProcessor, self).__init__(rowclass=rowclass)
+
+    def __iter__(self):
+        if not self._riter:
+            return
+
+        for ret in self._riter:
+            doc = None
+            if self._docs is not None:
+                # We still want to go through this if we have an empty dict
+                try:
+                    doc = self._docs[ret['id']]
+                except KeyError:
+                    warn("Error encountered when executing view. "
+                         "Inspect 'errors' for more information")
+
+            yield self.rowclass(ret['geometry'],
+                                ret['value'],
+                                ret['bbox'],
                                 # Use get, because reduce values don't have
                                 # IDs
                                 ret.get('id'),
@@ -251,7 +291,11 @@ class View(object):
         self.indexed_rows = 0
 
         if not row_processor:
-            row_processor = RowProcessor()
+            if spatial:
+                row_processor = SpatialRowProcessor()
+            else:
+                row_processor = RowProcessor()
+
         self.row_processor = row_processor
         self._rp_iter = None
 
