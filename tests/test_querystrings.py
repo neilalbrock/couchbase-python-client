@@ -16,7 +16,11 @@
 #
 
 # These tests are largely ported from php-ext-couchbase
-import json
+
+try:
+    import ujson as json
+except ImportError:
+    import json
 
 from couchbase.views.params import (make_options_string,
                                     Query,

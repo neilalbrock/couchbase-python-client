@@ -16,7 +16,12 @@
 #
 
 from nose.exc import SkipTest
-import json
+
+try:
+    import ujson as json
+except ImportError:
+    import json
+
 import pickle
 
 from tests.base import ConnectionTestCase

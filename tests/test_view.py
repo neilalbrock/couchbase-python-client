@@ -14,7 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import json
+
+try:
+    import ujson as json
+except ImportError:
+    import json
 
 from tests.base import ConnectionTestCase
 from couchbase.user_constants import FMT_JSON

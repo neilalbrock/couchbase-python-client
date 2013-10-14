@@ -16,7 +16,12 @@
 #
 
 import warnings
-import json
+
+try:
+    import ujson as json
+except ImportError:
+    import json
+
 import pickle
 
 from couchbase import (FMT_JSON, FMT_BYTES, FMT_UTF8, FMT_PICKLE, FMT_MASK)

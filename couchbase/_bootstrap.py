@@ -28,7 +28,11 @@ module contains python functions used exclusively from C. They are here
 because it was quicker to write them in Python than it was in C. Do not touch
 this file at all. You have been warned
 """
-import json
+try:
+    import ujson as json
+except ImportError:
+    import json
+
 import pickle
 
 import couchbase.exceptions as E

@@ -20,7 +20,12 @@ try:
 except ImportError:
     from ConfigParser import SafeConfigParser as ConfigParser
 import getopt
-import json
+
+try:
+    import ujson as json
+except ImportError:
+    import json
+
 import os
 import sys
 try:

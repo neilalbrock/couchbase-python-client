@@ -17,7 +17,12 @@
 
 from collections import namedtuple
 from copy import deepcopy
-import json
+
+try:
+    import ujson as json
+except ImportError:
+    import json
+
 from warnings import warn
 
 from couchbase.exceptions import ArgumentError, CouchbaseError, ViewEngineError

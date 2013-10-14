@@ -18,7 +18,11 @@
 # This module is largely used by other modules, though it just contains
 # simple string utilities :)
 
-import json
+try:
+    import ujson as json
+except ImportError:
+    import json
+
 from copy import deepcopy
 
 from couchbase._pyport import long, xrange, ulp, basestring, parse_qs

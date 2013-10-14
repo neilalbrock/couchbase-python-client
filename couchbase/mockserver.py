@@ -16,7 +16,12 @@
 from subprocess import Popen, PIPE
 from couchbase._pyport import urlopen, ulp, basestring
 import socket
-import json
+
+try:
+    import ujson as json
+except ImportError:
+    import json
+
 import os.path
 
 class BucketSpec(object):
